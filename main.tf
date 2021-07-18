@@ -22,6 +22,6 @@ provider "aws" {
 }
 
 resource "aws_s3_bucket" "b" {
-  bucket = "ecommerce-crud-geovannimp-bucket"
+  bucket = "ecommerce-crud-geovannimp-bucket-2"
   acl    = "private"
 }
