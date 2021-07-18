@@ -18,10 +18,10 @@ terraform {
 }
 
 provider "aws" {
-  region = "eu-west-1"
+  region = "us-west-1"
 }
 
 resource "aws_s3_bucket" "b" {
   bucket = "ecommerce-crud-geovannimp-bucket"
-  acl    = "public-read"
+  acl    = "private"
 }
