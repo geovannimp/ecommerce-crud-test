@@ -5,6 +5,7 @@ import { User } from '../../entities/User'
 import { prepareConnection } from '../../lib/database'
 import { UserDto, userToDto } from '../../dto/userDto'
 import jwt from 'jsonwebtoken';
+import { IncomingHttpHeaders } from 'http'
 
 
 class AuthServiceImpl {
@@ -13,7 +14,7 @@ class AuthServiceImpl {
   private readonly JWT_PRIVATE_SECRET: string
 
   constructor() {
-    this.JWT_PRIVATE_SECRET = process.env.JWT_PRIVATE_SECRET
+    this.JWT_PRIVATE_SECRET = process.env.JWT_PRIVATE_SECRET!
   }
 
   isTokenValid(token?: string) {
@@ -44,7 +45,7 @@ class AuthServiceImpl {
       }
     })
 
-    if (this.isUserValid(user) && await this.checkPassword(password, user.passwordHash)) {
+    if (user && this.isUserValid(user) && await this.checkPassword(password, user.passwordHash)) {
       const dtoUser = userToDto(user)
       const token = jwt.sign(dtoUser, this.JWT_PRIVATE_SECRET, {
         expiresIn: '1y',
@@ -52,26 +53,24 @@ class AuthServiceImpl {
       })
       return {
         ...dtoUser,
-        token,
+        token: token,
       }
+    } else {
+      throw new Error('User not found')
     }
   }
 
-  getUserDtoFromToken(token: string) {
+  getUserFromHeaders(headers: IncomingHttpHeaders) {
+    if (headers.authorization?.includes('Bearer ')) {
+      const token = headers['authorization'].split(' ')[1]
+      return this.getUserFromToken(token)
+    }
+  }
+
+  getUserFromToken(token: string) {
     try {
       const decoded = jwt.verify(token, this.JWT_PRIVATE_SECRET) as (jwt.JwtPayload & UserDto)
       return decoded
-    } catch {
-      return undefined
-    }
-  }
-
-  private async getUserFromToken(token: string) {
-    try {
-      const decoded = jwt.verify(token, this.JWT_PRIVATE_SECRET) as (jwt.JwtPayload & UserDto)
-      if (decoded.id) {
-        return await User.findOne({ where: { id: decoded.id } })
-      }
     } catch {
       return undefined
     }

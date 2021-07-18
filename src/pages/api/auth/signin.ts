@@ -40,7 +40,7 @@ type SignInResponse = {
  * @swagger
  * /api/auth/signin:
  *   post:
- *     description: Create a new user at the system
+ *     description: Login in an user
  *     produces:
  *       - application/json
  *     requestBody:

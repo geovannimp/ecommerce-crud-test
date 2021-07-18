@@ -1,7 +1,7 @@
 import { User } from "../entities/User"
 
 export interface UserDto {
-  id:  string | number
+  id: number
   email: string
   token?: string
 }

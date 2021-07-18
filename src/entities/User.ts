@@ -16,5 +16,5 @@ export class User extends BaseEntity {
     passwordHash!: string;
 
     @Column({ nullable: true })
-    confirmationToken?: string;
+    confirmationToken?: string | null;
 }
