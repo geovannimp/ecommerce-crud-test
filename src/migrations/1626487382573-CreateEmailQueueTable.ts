@@ -8,7 +8,7 @@ export class CreateEmailQueueTable1626487382573 implements MigrationInterface {
     }
 
     public async down(queryRunner: QueryRunner): Promise<void> {
-        await queryRunner.query(`DROP TABLE "email_queue"`);
+      await queryRunner.query(`DROP TABLE "email_queue"`);
     }
 
 }
