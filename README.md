@@ -6,8 +6,6 @@ First, copy the `.env.example` to `.env.local` and fill missing fields.
 
 Then:
 ```bash
-npm run dev
-# or
 yarn dev
 ```
 
@@ -18,6 +16,15 @@ Open [http://localhost:3000](http://localhost:3000) with your browser to see the
 `main.tf` has the config to create the S3 bucket used to store product photos.
 
 Cause of the time, I didn't have time to deploy the whole project to aws, but I intended to use [terraform next-js](https://registry.terraform.io/modules/dealmore/next-js/aws/latest) for that.
+
+## Database
+
+You can use the docker-compose file delivered with the project to run the postgres database using the following command inside the project:
+
+Then:
+```bash
+docker-compose up
+```
 
 ## Docs
 
