@@ -2,8 +2,9 @@ This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next
 
 ## Getting Started
 
-First, run the development server:
+First, copy the `.env.example` to `.env.local` and fill missing fields.
 
+Then:
 ```bash
 npm run dev
 # or
@@ -12,23 +13,18 @@ yarn dev
 
 Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
 
-You can start editing the page by modifying `pages/index.tsx`. The page auto-updates as you edit the file.
+## Deploy
 
-[API routes](https://nextjs.org/docs/api-routes/introduction) can be accessed on [http://localhost:3000/api/hello](http://localhost:3000/api/hello). This endpoint can be edited in `pages/api/hello.tsx`.
+`main.tf` has the config to create the S3 bucket used to store product photos.
 
-The `pages/api` directory is mapped to `/api/*`. Files in this directory are treated as [API routes](https://nextjs.org/docs/api-routes/introduction) instead of React pages.
+Cause of the time, I didn't have time to deploy the whole project to aws, but I intended to use [terraform next-js](https://registry.terraform.io/modules/dealmore/next-js/aws/latest) for that.
 
-## Learn More
+## Docs
 
-To learn more about Next.js, take a look at the following resources:
+All endpoints are documented using swagger, you can access through http://localhost:3000/docs.
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## Missing things
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
+- Cause of time, I wasn't able to implement the product photo edit page, but all endpoints are implemented and can be accessed through swagger.
 
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+- The "db:create" command is not working cause the library used has a bug, but I already opened a PR and I'm waiting the PR to be merged (https://github.com/Tada5hi/typeorm-extension/pull/13)
