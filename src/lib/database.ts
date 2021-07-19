@@ -2,6 +2,7 @@ import 'reflect-metadata';
 import { getConnection, createConnection, Connection } from 'typeorm';
 import { EmailQueue } from '../entities/EmailQueue';
 import { Product } from '../entities/Product';
+import { ProductPhoto } from '../entities/ProductPhoto';
 import { User } from '../entities/User';
 
 const host = process.env.DATABASE_HOST || '';
@@ -29,7 +30,7 @@ export const prepareConnection = () => {
         username,
         password,
         database,
-        entities: [EmailQueue, User, Product],
+        entities: [EmailQueue, User, Product, ProductPhoto],
         synchronize: false,
         logging: true
       });

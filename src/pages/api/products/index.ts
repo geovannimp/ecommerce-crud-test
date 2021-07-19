@@ -84,6 +84,7 @@ export default async function handler(
  * @swagger
  * /api/products:
  *   post:
+ *     tags: [Product]
  *     description: Create product
  *     security:
  *       - bearerAuth: []
@@ -119,6 +120,7 @@ const createProduct = async (req: NextApiRequest, res: NextApiResponse<CreatePro
  * @swagger
  * /api/products:
  *   get:
+ *     tags: [Product]
  *     description: Get products
  *     security:
  *       - bearerAuth: []

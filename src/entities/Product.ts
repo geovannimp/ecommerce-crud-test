@@ -18,7 +18,7 @@ export class Product extends BaseEntity {
     @Column()
     userId!: number
 
-    @Column({ nullable: true })
+    @Column({ nullable: true, type: 'date' })
     publishedAt?: Date | null
 
     @DeleteDateColumn()
