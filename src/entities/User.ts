@@ -15,6 +15,6 @@ export class User extends BaseEntity {
     @Column()
     passwordHash!: string;
 
-    @Column({ nullable: true })
+    @Column({ nullable: true, type: 'varchar' })
     confirmationToken?: string | null;
 }
