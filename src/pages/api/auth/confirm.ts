@@ -33,6 +33,7 @@ type ConfirmEmailResponse = {
  * @swagger
  * /api/auth/confirm:
  *   post:
+ *     tags: [Auth]
  *     description: Confirm user email
  *     produces:
  *       - application/json

@@ -38,6 +38,7 @@ type SignUpResponse = {
  * @swagger
  * /api/auth/signup:
  *   post:
+ *     tags: [Auth]
  *     description: Create a new user at the system
  *     produces:
  *       - application/json
