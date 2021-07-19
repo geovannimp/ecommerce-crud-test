@@ -11,7 +11,7 @@ const ApiDoc = ({ spec }: InferGetStaticPropsType<typeof getStaticProps>) => {
 export const getStaticProps: GetStaticProps = async ctx => {
   const spec: Record<string, any> = createSwaggerSpec({
     openApiVersion: '3.0.1',
-    title: 'NextJS Swagger',
+    title: 'Ecommerce Crud Swagger',
     version: '0.1.0',
     apiFolder: 'src/pages/api',
   });
