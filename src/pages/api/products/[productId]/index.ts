@@ -104,7 +104,7 @@ export default async function handler(
  *           $ref: '#/definitions/ProductDto'
  */
 const updateProduct = async (req: NextApiRequest, res: NextApiResponse<UpdateProductResponse>) => {
-  const user = AuthService.getUserFromHeaders(req.headers)
+  const user = AuthService.getUserFromRequest(req, res)
   if (user) {
     if (req.query.productId) {
       try {
@@ -145,7 +145,7 @@ const updateProduct = async (req: NextApiRequest, res: NextApiResponse<UpdatePro
  *           $ref: '#/definitions/ProductDto'
  */
 const deleteProduct = async (req: NextApiRequest, res: NextApiResponse<DeleteProductResponse>) => {
-  const user = AuthService.getUserFromHeaders(req.headers)
+  const user = AuthService.getUserFromRequest(req, res)
   if (user) {
     if (req.query.productId) {
       try {

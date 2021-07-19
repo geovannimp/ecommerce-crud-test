@@ -100,7 +100,7 @@ export default async function handler(
  *           $ref: '#/definitions/ProductPhotoDto'
  */
 const deleteProductPhoto = async (req: NextApiRequest, res: NextApiResponse<DeleteProductPhotoResponse>) => {
-  const user = AuthService.getUserFromHeaders(req.headers)
+  const user = AuthService.getUserFromRequest(req, res)
   if (user) {
     if (req.query.productId && req.query.photoId) {
       try {

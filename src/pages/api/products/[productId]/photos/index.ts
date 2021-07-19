@@ -88,7 +88,7 @@ export default async function handler(
  *             $ref: '#/definitions/ProductPhotoDto'
  */
 const getProductPhotos = async (req: NextApiRequest, res: NextApiResponse<GetProductPhotosResponse>) => {
-  const user = AuthService.getUserFromHeaders(req.headers)
+  const user = AuthService.getUserFromRequest(req, res)
 
   if (user) {
     if (req.query.productId) {
@@ -154,7 +154,7 @@ const getProductPhotos = async (req: NextApiRequest, res: NextApiResponse<GetPro
  *           $ref: '#/definitions/ProductPhotoDto'
  */
 const addProductPhoto = async (req: NextApiRequest, res: NextApiResponse<AddProductPhotoResponse>) => {
-  const user = AuthService.getUserFromHeaders(req.headers)
+  const user = AuthService.getUserFromRequest(req, res)
   if (user) {
     if (req.query.productId) {
       try {

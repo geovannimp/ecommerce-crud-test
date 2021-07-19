@@ -5,7 +5,8 @@ import { User } from '../../entities/User'
 import { prepareConnection } from '../../lib/database'
 import { UserDto, userToDto } from '../../dto/userDto'
 import jwt from 'jsonwebtoken';
-import { IncomingHttpHeaders } from 'http'
+import { NextApiRequest, NextApiResponse } from 'next'
+import Cookies from 'cookies'
 
 
 class AuthServiceImpl {
@@ -60,15 +61,22 @@ class AuthServiceImpl {
     }
   }
 
-  getUserFromHeaders(headers: IncomingHttpHeaders) {
-    if (headers.authorization?.includes('Bearer ')) {
-      const token = headers['authorization'].split(' ')[1]
-      return this.getUserFromToken(token)
+  getUserFromRequest(req: NextApiRequest, res: NextApiResponse) {
+    const cookies = new Cookies(req, res)
+    let authToken = cookies.get('auth-token')
+
+    if (!authToken && req.headers.authorization?.includes('Bearer ')) {
+      authToken = req.headers['authorization'].split(' ')[1]
     }
+
+    return this.getUserFromToken(authToken)
   }
 
-  getUserFromToken(token: string) {
+  getUserFromToken(token?: string) {
     try {
+      if (!token) {
+        return undefined
+      }
       const decoded = jwt.verify(token, this.JWT_PRIVATE_SECRET) as (jwt.JwtPayload & UserDto)
       return decoded
     } catch {

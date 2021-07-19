@@ -103,7 +103,7 @@ export default async function handler(
  *           $ref: '#/definitions/ProductDto'
  */
 const createProduct = async (req: NextApiRequest, res: NextApiResponse<CreateProductResponse>) => {
-  const user = AuthService.getUserFromHeaders(req.headers)
+  const user = AuthService.getUserFromRequest(req, res)
   if (user) {
     if (req.body.name && req.body.description && req.body.price !== undefined) {
       const product = await ProductService.createProduct(req.body, user)
@@ -134,7 +134,7 @@ const createProduct = async (req: NextApiRequest, res: NextApiResponse<CreatePro
  *             $ref: '#/definitions/ProductDto'
  */
 const getProducts = async (req: NextApiRequest, res: NextApiResponse<GetProductsResponse>) => {
-  const user = AuthService.getUserFromHeaders(req.headers)
+  const user = AuthService.getUserFromRequest(req, res)
 
   if (user) {
     const products = await ProductService.getProductsByUserId(user.id)
