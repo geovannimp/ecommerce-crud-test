@@ -3,6 +3,12 @@ import { ProductDto } from '../../../../dto/productDto'
 import { AuthService } from '../../../../service/back/AuthService'
 import { ProductService } from '../../../../service/back/ProductService'
 
+type GetProductResponse = {
+  product: ProductDto
+} | {
+  message: string
+}
+
 
 type UpdateProductResponse = {
   product: ProductDto
@@ -50,12 +56,54 @@ type DeleteProductResponse = {
 
 export default async function handler(
   req: NextApiRequest,
-  res: NextApiResponse<UpdateProductResponse | DeleteProductResponse>
+  res: NextApiResponse<GetProductResponse | UpdateProductResponse | DeleteProductResponse>
 ) {
   switch (req.method) {
+    case 'GET': return await getProduct(req, res)
     case 'PUT': return await updateProduct(req, res)
     case 'DELETE': return await deleteProduct(req, res)
     default: res.status(404).json({ message: 'Not Found' })
+  }
+}
+
+/**
+ * @swagger
+ * /api/products/{productId}:
+ *   get:
+ *     tags: [Product]
+ *     description: Update product
+ *     parameters:
+ *       - in: path
+ *         name: productId
+ *         schema:
+ *           type: integer
+ *         required: true
+ *         description: Numeric ID of the product to edit
+ *     security:
+ *       - bearerAuth: []
+ *     produces:
+ *       - application/json
+ *     responses:
+ *       200:
+ *         schema:
+ *           type: object
+ *           $ref: '#/definitions/ProductDto'
+ */
+const getProduct = async (req: NextApiRequest, res: NextApiResponse<GetProductResponse>) => {
+  const user = AuthService.getUserFromRequest(req, res)
+  if (user) {
+    if (req.query.productId) {
+      try {
+        const product = await ProductService.getProduct(user.id, req.query.productId as string)
+        res.status(200).json({ product })
+      } catch (e) {
+        res.status(500).json({ message: e.message })
+      }
+    } else {
+      res.status(400).json({ message: 'Invalid path' })
+    }
+  } else {
+    res.status(403).json({ message: 'Forbidden' })
   }
 }
 

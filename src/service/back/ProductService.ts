@@ -42,6 +42,18 @@ class ProductServiceImpl {
     return productToDto(savedProduct)
   }
 
+  async getProduct(userId: number, productId: string) {
+    await prepareConnection()
+
+    const dbProduct = await Product.findOne({ where: { id: productId, userId } })
+
+    if (!dbProduct) {
+      throw new Error('Product not found')
+    }
+
+    return productToDto(dbProduct)
+  }
+
   async updateProduct(userId: number, productId: string, product: Partial<ProductDto>) {
     await prepareConnection()
 

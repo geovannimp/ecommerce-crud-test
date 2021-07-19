@@ -66,6 +66,42 @@ class ApiServiceImpl {
     })
   }
 
+  async addProduct(product: Omit<ProductDto, 'id'>): Promise<ProductDto> {
+    return new Promise((resolve,reject) => {
+      const endpoint = `${this.API_URL}/products`
+      axios.post(endpoint, product)
+        .then(r => r.data.product)
+        .then(resolve)
+        .catch(e => {
+          reject(new Error(e.response.data.message))
+        })
+    })
+  }
+
+  async editProduct(productId: string, product: Omit<ProductDto, 'id'>): Promise<ProductDto> {
+    return new Promise((resolve,reject) => {
+      const endpoint = `${this.API_URL}/products/${productId}`
+      axios.put(endpoint, product)
+        .then(r => r.data.product)
+        .then(resolve)
+        .catch(e => {
+          reject(new Error(e.response.data.message))
+        })
+    })
+  }
+
+  async loadProduct(productId: string): Promise<ProductDto> {
+    return new Promise((resolve,reject) => {
+      const endpoint = `${this.API_URL}/products/${productId}`
+      axios.get(endpoint)
+        .then(r => r.data.product)
+        .then(resolve)
+        .catch(e => {
+          reject(new Error(e.response?.data?.message))
+        })
+    })
+  }
+
 }
 
 export const ApiService = new ApiServiceImpl()
