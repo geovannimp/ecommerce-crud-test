@@ -1,4 +1,5 @@
 import axios from 'axios'
+import { ProductDto } from '../../dto/productDto'
 import { UserDto } from '../../dto/userDto'
 
 class ApiServiceImpl {
@@ -46,6 +47,18 @@ class ApiServiceImpl {
         email, password
       })
         .then(r => r.data.user)
+        .then(resolve)
+        .catch(e => {
+          reject(new Error(e.response.data.message))
+        })
+    })
+  }
+
+  async getProducts(): Promise<ProductDto[]> {
+    return new Promise((resolve,reject) => {
+      const endpoint = `${this.API_URL}/products`
+      axios.get(endpoint)
+        .then(r => r.data.products)
         .then(resolve)
         .catch(e => {
           reject(new Error(e.response.data.message))
